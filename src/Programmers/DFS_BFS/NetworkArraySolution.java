@@ -28,6 +28,7 @@ public class NetworkArraySolution {
             queue.offer(i);
 
             while (!queue.isEmpty()) {
+                // queue 에서 꺼내서 current 변수에 삽입
                 int current = queue.poll();
                 visited[current] = true;
 
@@ -39,6 +40,7 @@ public class NetworkArraySolution {
             }
             answer++;
         }
+        System.out.println("answer = " + answer);
         return answer;
     }
 }
