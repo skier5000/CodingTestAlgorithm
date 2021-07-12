@@ -1,6 +1,6 @@
 package Programmers.DFS_BFS;
 
-public class Solution {
+public class TargetNumber {
 
     public static void main(String args[]){
         int[] numbers = {1, 1, 1, 1, 1};
