@@ -1,3 +1,13 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+
+# .idea ignored files
+/misc.xml
+/modules.xml
+/uiDesigner.xml
+/vcs.xml
+/workspace.xml
+
+# iml
+#/CodingTest/CodingTest.iml
