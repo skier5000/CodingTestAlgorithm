@@ -42,24 +42,28 @@ public class MatrixTurn {
     public int[] solution(int rows, int columns, int[][] queries) {
         int num = 1;
         int[] result = new int[queries.length];
-        int[][] table = new int[rows][columns];
+        int[][] matrix = new int[rows][columns];
 
+        // 2차원 매트릭스 생성
         for(int i = 0; i < rows; i++) {
             for(int j = 0; j < columns; j++) {
-                table[i][j] = num++;
+                matrix[i][j] = num++;
             }
         }
 
+        // 로직
         int resultIdx = 0;
         for(int i = 0; i < queries.length; i++) {
-            int[] element = minusOneFromElement(queries[i]);
-            result[resultIdx++] = getMinValue(element, table);
+            int[] element = minusOneFromElement(queries[i]); // 1씩 뺀 값을 element 배열(int)에 저장
+            result[resultIdx++] = getMinValue(element, matrix);
         }
 
         return result;
     }
 
-    //1
+
+    // 메소드
+    // 1씩 뺀 값을 element 배열(int)에 저장
     public int[] minusOneFromElement(int[] query) {
         for(int i = 0; i < query.length; i++) {
             query[i] -= 1;
@@ -67,7 +71,9 @@ public class MatrixTurn {
         return query;
     }
 
-    //2
+
+    // 메소드
+    // 1씩 뺀 queries -> element   /   만들어진 매트릭스 -> matrix
     public int getMinValue(int[] element, int[][] table) {
         List<int[]> rotatingList = getRotatingList(element);
         int tempFirst = table[rotatingList.get(0)[0]][rotatingList.get(0)[1]];
@@ -85,7 +91,10 @@ public class MatrixTurn {
         }
         return min;
     }
-    //3
+
+
+    // 메소드
+    // 1씩 뺀 queries -> element
     public List<int[]> getRotatingList(int[] element) {
         List<int[]> rotatingList = new ArrayList<>();
         int x1 = element[0];
