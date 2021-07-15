@@ -5,15 +5,17 @@ public class TargetNumber {
     public static void main(String args[]){
         int[] numbers = {1, 1, 1, 1, 1};
         int target = 3;
-        solution(numbers, target);
+
+        TargetNumber targetNumber = new TargetNumber();
+        targetNumber.solution(numbers, target);
     }
 
-    public static int solution(int[] numbers, int target) {
+    public int solution(int[] numbers, int target) {
         int answer = backTrack(numbers, target, 0);
         return answer;
     }
 
-    public static int backTrack(int[] numbers, int target, int idx) {
+    public int backTrack(int[] numbers, int target, int idx) {
         if (idx == numbers.length) {
             int sum = 0;
             for (int n : numbers) {
