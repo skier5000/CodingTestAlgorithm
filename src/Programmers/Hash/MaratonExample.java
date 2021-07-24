@@ -21,23 +21,22 @@ public class MaratonExample {
 		String answer = "";
 		HashMap<String, Integer> hm = new HashMap<>();
 
-		for(String player : participant) {
-			hm.put(player, hm.getOrDefault(player, 0) + 1);  //찾는 키가 존재한다면 찾는 키의 값을 반환하고 없다면 기본 값을 반환한다.
+		// 마라톤에 참여한 선수들 이름
+		for (String player : participant) {
+			hm.put(player, hm.getOrDefault(player, 0) + 1);
 		}
 
-		// hm = {leo=1, eden=1, kiki=1}
-		for(String player : completion) {
-			hm.put(player, hm.getOrDefault(player, 0) -1);
+		// 완주한 선수들의 이름이 담긴 배열
+		for (String edPlayer : completion) {
+			hm.put(edPlayer, hm.get(edPlayer) - 1);
 		}
 
-		// hm = {leo=1, eden=0, kiki=0}
-
-		for (String key : hm.keySet()) {
-			if (hm.get(key) == 1){
-				answer = key;
-			}
+		// 완주하지 못한 선수
+		for (String nonPlayer : hm.keySet()) {
+			System.out.println(hm.get(nonPlayer));
+			if(!hm.get(nonPlayer).equals(0))
+				answer = nonPlayer;
 		}
-
 
 		return answer;
 	}
