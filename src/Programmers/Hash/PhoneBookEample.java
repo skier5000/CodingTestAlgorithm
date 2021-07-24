@@ -13,27 +13,18 @@ public class PhoneBookEample {
 	}
 	
 	public static boolean mySolution(String[] phoneBook) {
-		boolean answer = true;
-		
-		for(int i=0; i<phoneBook.length-1; i++) {
-			for(int j=i+1;j<phoneBook.length;j++) {
-				System.out.println("phoneBook[i] : " + phoneBook[i]);
-				System.out.println("phoneBook[j] : " + phoneBook[j]);
-				System.out.println("phoneBook startsWith : " + phoneBook[j].startsWith(phoneBook[i]));
-				if(phoneBook[j].startsWith(phoneBook[i])) {
+		int i;
+		int j;
+		for (i = 0; i < phoneBook.length; i++) {
+			for (j = i+1; j < phoneBook.length; j++) {
+				if (phoneBook[j].startsWith(phoneBook[i]))
 					return false;
-				}
-				if(phoneBook[i].startsWith(phoneBook[j])) {
+				if (phoneBook[i].startsWith(phoneBook[j]))
 					return false;
-				}
-
 			}
 		}
-		
-		System.out.println("---------------------------");
-		System.out.println("answer : " + answer);
-		System.out.println("---------------------------");
-		return answer;
+
+		return true;
 	}
 	
 	

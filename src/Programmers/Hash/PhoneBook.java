@@ -19,8 +19,6 @@ public class PhoneBook {
 		int j;
 		for(i=0; i<phoneBook.length-1; i++) {
 			for(j=i+1; j<phoneBook.length; j++) {
-				System.out.println("phoneBook[i] : " + phoneBook[i]);
-				System.out.println("phoneBook[j] : " + phoneBook[j]);
 				if(phoneBook[i].startsWith(phoneBook[j])) {
                     return false;
                 }
