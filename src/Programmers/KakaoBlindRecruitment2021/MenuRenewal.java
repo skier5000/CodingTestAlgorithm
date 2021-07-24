@@ -2,6 +2,11 @@ package Programmers.KakaoBlindRecruitment2021;
 
 import java.util.*;
 
+
+/**
+ * 참고 URL
+ * https://velog.io/@hammii/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%8B%A0%EA%B7%9C-%EC%95%84%EC%9D%B4%EB%94%94-%EC%B6%94%EC%B2%9C-java-2021-KAKAO-BLIND-RECRUITMENT
+ */
 public class MenuRenewal {
     private static List<String> combination;
 
