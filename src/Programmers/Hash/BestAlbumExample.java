@@ -19,10 +19,11 @@ public class BestAlbumExample {
         HashMap<String, Integer> hm = new HashMap<>();
         HashMap<String, playListIndex> answerHm = new HashMap<>();
 
-        // 정답 해시맵 생성 및 정렬
+        // 정답 해시맵 생성 (인덱스)
         for (int i = 0; i < genres.length; i++) {
             answerHm.put(genres[i], new playListIndex(plays[i], i));
         }
+
 
         // 장르별 노래 재생빈도수
         for (int i = 0; i < genres.length; i++) {
@@ -52,7 +53,6 @@ public class BestAlbumExample {
             }
 
         });
-//        Collections.reverse(list); // 주석시 오름차순
         return list;
     }
 
