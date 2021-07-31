@@ -8,16 +8,20 @@ public class NetworkArraySolution {
     private static final int CONNECTED = 1;
 
     public static void main(String[] args) {
-        int n = 3;
-        int[][] computers = {{1, 1, 0}, {1, 1, 0}, {0, 0, 1}};
+        int n1 = 3;
+        int n2 = 3;
+        int[][] computers1 = {{1, 1, 0}, {1, 1, 0}, {0, 0, 1}};
+        int[][] computers2 = {{1, 1, 0}, {1, 1, 1}, {0, 1, 1}};
         // return 2;
+        // return 1;
 
-        solution(n, computers);
+        solution(n1, computers1);
     }
 
     public static int solution(int n, int[][] computers) {
         int answer = 0;
         boolean[] visited = new boolean[n];
+
         for (int i=0 ; i<n ; i++) {
             if (visited[i]){
                 continue;
@@ -33,13 +37,14 @@ public class NetworkArraySolution {
                 visited[current] = true;
 
                 for (int j=0 ; j<n ; j++){
-                    if (current != j && computers[current][j] == CONNECTED && !visited[j]){
+                    if (!(current == j) && computers[current][j] == CONNECTED && !visited[j]){
                         queue.offer(j);
                     }
                 }
             }
             answer++;
         }
+
         System.out.println("answer = " + answer);
         return answer;
     }
