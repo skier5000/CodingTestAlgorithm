@@ -1,8 +1,6 @@
-package Programmers.SsgCodingTest;
+package CodingTest.SsgCodingTest;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 

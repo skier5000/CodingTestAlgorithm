@@ -1,4 +1,4 @@
-package Programmers.SsgCodingTest;
+package CodingTest.SsgCodingTest;
 
 import java.util.LinkedList;
 import java.util.Queue;
