@@ -62,6 +62,7 @@ public class Question3 {
     }
 
     // 반례 : 1 ~ 15만  /  15만 ~ 1
+    // 반례 : 1 ~ 15만  /  1 ~ 15만 의 선형적인 방법
 
     public int[] reSolution(int[] truck, int[] weight) {
         int[] result = new int[weight.length];
