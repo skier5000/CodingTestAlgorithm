@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 class ExpressedAsN {
+    public static void main(String[] args) {
+
+    }
     public int solution(int N, int number) {
         int answer = -1;
         List<Set<Integer>> list = new ArrayList<>();
