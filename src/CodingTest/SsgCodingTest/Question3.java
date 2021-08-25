@@ -63,6 +63,7 @@ public class Question3 {
 
     // 반례 : 1 ~ 15만  /  15만 ~ 1
     // 반례 : 1 ~ 15만  /  1 ~ 15만 의 선형적인 방법
+    // 지금 들어갈 화물이 전에 들어간 화물보다 크거나 같을 경우
 
     public int[] reSolution(int[] truck, int[] weight) {
         int[] result = new int[weight.length];
@@ -71,12 +72,12 @@ public class Question3 {
         for (int i = 0; i < weight.length; i++) {
 
             if (i != 0) {
-                if (weight[i] >= weight[i - 1]) { // 지금 무게랑 전 무게랑 비교 -> 지금 무게가 크거나 같아
+                if (weight[i] >= weight[i - 1]) { // 지금 무게랑 전 무게랑 비교 -> 지금 무게가 들어간 화물보다 크거나 같아
                     if (result[i - 1] == -1) { // 다 돌았는데 없다
                         result[i] = -1;
                         continue;
                     }
-                    for (int j = truckIndex; j < truck.length; j++) { // 얘가 들어간 트럭부터 시작
+                    for (int j = truckIndex; j < truck.length; j++) { // 들어간 트럭부터 인덱스 탐색 시작
                         if (truck[j] - weight[i] >= 0) {
                             truck[j] = truck[j] - weight[i];
                             result[i] = j + 1;
@@ -111,11 +112,6 @@ public class Question3 {
                         truckIndex = j;
                         break;
                     }
-
-//                    if (j == truck.length - 1) {
-//                        result[i] = -1;
-//                        truckIndex = j;
-//                    }
                 }
 
             }
