@@ -8,8 +8,8 @@ public class ThisBiggestNumber {
 		int[] numbers1 = {6,10,2};  // [6102, 6210, 1062, 1026, 2610, 2106]
 		int[] numbers2 = {3,30,34,5,9};
 
-		solution(numbers1);
-		//solution(numbers2);
+		//solution(numbers1);
+		solution(numbers2);
 	}
 
 
@@ -54,14 +54,18 @@ public class ThisBiggestNumber {
 		for(int i = 0; i < numbers.length; i++) {
 			list.add(numbers[i]);
 		}
+
 		Collections.sort(list, (a, b) -> {
-			String as = String.valueOf(a), bs = String.valueOf(b);
+			String as = String.valueOf(a);
+			String bs = String.valueOf(b);
 			return -Integer.compare(Integer.parseInt(as + bs), Integer.parseInt(bs + as));
 		});
+
 		StringBuilder sb = new StringBuilder();
 		for(Integer i : list) {
 			sb.append(i);
 		}
+
 		answer = sb.toString();
 		if(answer.charAt(0) == '0') {
 			System.out.println(answer);
