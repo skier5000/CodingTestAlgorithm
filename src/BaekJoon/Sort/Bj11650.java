@@ -33,7 +33,7 @@ public class Bj11650 {
             matrix[i][0] = Integer.parseInt(st.nextToken());
             matrix[i][1] = Integer.parseInt(st.nextToken());
         }
-        System.out.println("matrix = " + matrix);
+        //System.out.println("matrix = " + matrix);
 
         Arrays.sort(matrix, new Comparator<int[]>() {
             @Override
