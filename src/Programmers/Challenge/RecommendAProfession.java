@@ -20,17 +20,21 @@ public class RecommendAProfession {
 
     public String solution(String[] table, String[] languages, int[] preference) {
         String answer = "";
-        int score=-1;
+        int score = -1;
         for(String str : table){
             String[] t = str.split(" ");
             String tname = t[0];
             int tscore = 0;
-            for(int i=0;i<languages.length;i++){
-                int idx = Arrays.asList(t).indexOf(languages[i]);
-                if(idx>-1) tscore+=preference[i]*(6-idx);
+            for (int i = 0; i < languages.length; i++) { // languages 반복
+                int idx = Arrays.asList(t).indexOf(languages[i]); // languages에 해당하는 t 인덱스
+                if (idx > -1) { // 존재하면
+                    tscore += preference[i] * (6 - idx);
+                }
             }
-            if(score ==tscore && answer.compareTo(tname)>0) answer=tname;
-            if(score<tscore){
+            if ((score == tscore) && answer.compareTo(tname)>0) {
+                answer=tname;
+            }
+            if (score<tscore) {
                 score =tscore;
                 answer= tname;
             }
