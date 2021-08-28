@@ -61,11 +61,11 @@ public class gineungDev {
 			if(a%speeds[i] > 0) {
 				val = (a/speeds[i]) + 1;
 				//System.out.println("걸리는 시간(날짜) : " + val );
-				queue.add(val);
+				queue.offer(val);
 			}else {
 				val = (a/speeds[i]);
 				//System.out.println("걸리는 시간(날짜) : " + val );
-				queue.add(val);
+				queue.offer(val);
 			}
 
 			//System.out.println("======================================================");

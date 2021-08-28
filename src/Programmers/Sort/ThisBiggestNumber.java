@@ -55,11 +55,15 @@ public class ThisBiggestNumber {
 			list.add(numbers[i]);
 		}
 
-		Collections.sort(list, (a, b) -> {
-			String as = String.valueOf(a);
-			String bs = String.valueOf(b);
-			return -Integer.compare(Integer.parseInt(as + bs), Integer.parseInt(bs + as));
+		Collections.sort(list, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				String as = String.valueOf(o1);
+				String bs = String.valueOf(o2);
+				return -Integer.compare(Integer.parseInt(as + bs), Integer.parseInt(bs + as));
+			}
 		});
+
 
 		StringBuilder sb = new StringBuilder();
 		for(Integer i : list) {
