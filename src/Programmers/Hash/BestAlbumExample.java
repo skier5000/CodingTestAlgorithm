@@ -16,54 +16,60 @@ public class BestAlbumExample {
 
     public int[] solution(String[] genres, int[] plays) {
         int[] answer = {};
-        HashMap<String, Integer> hm = new HashMap<>();
-        HashMap<String, playListIndex> answerHm = new HashMap<>();
+        int count = 0;
+        ArrayList<Integer> resultArray = new ArrayList<>();
 
-        // 정답 해시맵 생성 (인덱스)
+        HashMap<String, Integer> albumPlaysRank = new HashMap<>();
         for (int i = 0; i < genres.length; i++) {
-            answerHm.put(genres[i], new playListIndex(plays[i], i));
+            albumPlaysRank.put(genres[i], albumPlaysRank.getOrDefault(genres[i], 0) + plays[i]);
         }
 
+        List<Map.Entry<String, Integer>> entryList = new LinkedList<>(albumPlaysRank.entrySet());
+        entryList.sort(new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return o2.getValue() - o1.getValue();
+            }
+        });
 
-        // 장르별 노래 재생빈도수
+        ArrayList<idxAlbum> idxAlbumArrayList = new ArrayList<>();
         for (int i = 0; i < genres.length; i++) {
-            hm.put(genres[i], hm.getOrDefault(genres[i], 0) + plays[i]);
+            idxAlbumArrayList.add(new idxAlbum(i, genres[i], plays[i]));
+        }
+        Collections.sort(idxAlbumArrayList, new Comparator<idxAlbum>() {
+            @Override
+            public int compare(idxAlbum o1, idxAlbum o2) {
+                return o2.play - o1.play;
+            }
+        });
+
+        // 각 두개씩 가져오기 -> 한 곡짜리 일 경우 테스트케이스에서 에러
+        for (Map.Entry<String, Integer> stringIntegerEntry : entryList) {
+            for (int i = 0; i < idxAlbumArrayList.size(); i++) {
+                if (count == 2) {
+                    count = 0;
+                    break;
+                }
+                if (stringIntegerEntry.getKey().equals(idxAlbumArrayList.get(i).genre)){
+                    resultArray.add(idxAlbumArrayList.get(i).idx);
+                    count++;
+                }
+            }
         }
 
-        // hm -> classic : 1,450회, pop : 3,100회    =>   정렬 (내림차순)
-        Iterator iteratorHm = sortByValue(hm).iterator();
-        while(iteratorHm.hasNext()) {
-            String temp = (String) iteratorHm.next(); // pop
-
-        }
-
+        answer = resultArray.stream().mapToInt(Integer::intValue).toArray();
         return answer;
     }
 
-    // 해시맵 정렬
-    public static List sortByValue(final Map map) {
-        List<String> list = new ArrayList();
-        list.addAll(map.keySet());
-        Collections.sort(list,new Comparator() {
-            public int compare(Object o1,Object o2) {
-                Object v1 = map.get(o1);
-                Object v2 = map.get(o2);
+    static class idxAlbum {
+        int idx;
+        String genre;
+        int play;
 
-                return ((Comparable) v2).compareTo(v1);
-            }
-
-        });
-        return list;
-    }
-
-    class playListIndex {
-        int plays;
-        int index;
-
-        public playListIndex(int plays, int index) {
-            this.plays = plays;
-            this.index = index;
+        public idxAlbum(int idx, String genre, int play) {
+            this.idx = idx;
+            this.genre = genre;
+            this.play = play;
         }
     }
-
 }

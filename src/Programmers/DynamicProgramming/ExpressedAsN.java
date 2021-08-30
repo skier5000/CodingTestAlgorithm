@@ -7,54 +7,49 @@ import java.util.Set;
 
 class ExpressedAsN {
     public static void main(String[] args) {
-
+        ExpressedAsN expressedAsN = new ExpressedAsN();
+        System.out.println(expressedAsN.solution(5, 12)); // 4
+        System.out.println(expressedAsN.solution(2, 11)); // 3
     }
     public int solution(int N, int number) {
         int answer = -1;
-        List<Set<Integer>> list = new ArrayList<>();
-        for (int i = 0 ; i < 8; i++) {
-            list.add(new HashSet<>());
+        Set<Integer>[] setArr = new Set[9]; // N은 1 이상 9 이하 이므로
+        int t = N;
+
+        for(int i = 1; i < 9; i++) {
+            setArr[i] = new HashSet<>();
+            setArr[i].add(t);
+            t = t * 10 + N;
         }
-        list.get(0).add(N); // N을 1개만 사용할 경우, N 자신만 표현 가능
 
-        for (int i = 0; i < 8; i++) {
-            // 1. N을 (i + 1)번 이어붙인 경우
-            list.get(i).add(Integer.parseInt(stringRepeat(N, i + 1)));
-
-            // 2. 이전 단계의 결과를 서로 사칙연산한 결과
-            // [N을 1개 사용한 경우] union [(i + 1) - 1개 사용한 경우]
-            // [N을 2개 사용한 경우] union [(i + 1) - 2개 사용한 경우]
-            // ...
-            for (int j = 0; j < i; j++) {
-                for (int case1 : list.get(j)) {
-                    for (int case2 : list.get(i - 1 - j)) {
-                        list.get(i).add(case1 + case2);
-                        list.get(i).add(case1 - case2);
-                        list.get(i).add(case1 * case2);
-
-                        if (case2 != 0) {
-                            list.get(i).add(case1 / case2);
+        for(int i = 1; i < 9; i++) {
+            for(int j = 1; j < i; j++) {
+                for(Integer a : setArr[j]) {
+                    for(Integer b : setArr[i - j]) {
+                        setArr[i].add(a + b);
+                        setArr[i].add(a - b);
+                        setArr[i].add(b - a);
+                        setArr[i].add(a * b);
+                        if(b != 0) {
+                            setArr[i].add(a / b);
+                        }
+                        if(a != 0) {
+                            setArr[i].add(b / a);
                         }
                     }
                 }
             }
+        }
 
-            if (list.get(i).contains(number)) {
-                answer = i * 1;
+        for(int i = 1; i < 9; i++) {
+            if(setArr[i].contains(number)) {
+                answer = i;
                 break;
             }
         }
-
         return answer;
     }
 
-
-    private String stringRepeat(int N, int times) {
-        StringBuilder answer = new StringBuilder();
-        String str = String.valueOf(N);
-        answer.append(str.repeat(Math.max(0, times)));
-        return answer.toString();
-    }
-
-
 }
+
+
