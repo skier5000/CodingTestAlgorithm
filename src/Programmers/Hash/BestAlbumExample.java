@@ -9,9 +9,14 @@ public class BestAlbumExample {
         int[] plays = {500, 600, 150, 800, 2500};
         //return {4,1,3,0}
 
+        // test 케이스
+        String[] genresTest = {"classic", "pop", "classic", "classic", "pop", "test"};
+        int[] playsTest = {500, 600, 150, 800, 2500, 6000};
+
         BestAlbumExample bestAlbum = new BestAlbumExample();
 
-        bestAlbum.solution(genres, plays);
+        //bestAlbum.solution(genres, plays);
+        bestAlbum.solution(genresTest, playsTest);
     }
 
     public int[] solution(String[] genres, int[] plays) {
