@@ -27,7 +27,7 @@ public class Boj2667 {
         check = new boolean[N][N];
 
         // 노드 구성
-        for (int i = 0; i < N-1; i++) { // 그래프 구성
+        for (int i = 0; i < N; i++) { // 그래프 구성
             char[] chars = br.readLine().toCharArray();
             for (int j = 0; j < chars.length; j++) {
                 node[i][j] = Integer.parseInt(String.valueOf(chars[j]));
@@ -47,9 +47,9 @@ public class Boj2667 {
         Arrays.sort(aparts);
         System.out.println(apartNum);
 
-        for(int i=0; i<aparts.length; i++){
-            if(aparts[i] == 0){
-            }else{
+        for (int i = 0; i < aparts.length; i++) {
+            if (aparts[i] == 0) {
+            } else {
                 System.out.println(aparts[i]);
             }
         }
