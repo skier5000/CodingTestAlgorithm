@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /*
+-> 갈 수 있는 방향(0)이 있으면 이동
+->
 반례
 
 8 8
