@@ -44,6 +44,7 @@ public class Boj7576 {
         bfs();
 
         int returnValue = -1;
+
         Loop1 :
         for (int i = 0; i < check.length; i++) {
             Loop2 :
