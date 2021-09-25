@@ -16,6 +16,10 @@ import java.util.Queue;
 2 2
 0 0
 0 0
+
+2 2
+1 1
+1 1
  */
 public class Boj7576 {
     static int dx[] = {0,0,1,-1};
@@ -42,30 +46,34 @@ public class Boj7576 {
 
 
         bfs();
+        boolean allCheckBoolean = allCheck();
 
-        int returnValue = -1;
+        if (allCheckBoolean == true) {
+            System.out.println(0);
+        } else {
+            int returnValue = -1;
 
-        Loop1 :
-        for (int i = 0; i < check.length; i++) {
-            Loop2 :
-            for (int j = 0; j < check[i].length; j++) {
+            Loop1 :
+            for (int i = 0; i < check.length; i++) {
+                Loop2 :
+                for (int j = 0; j < check[i].length; j++) {
 
-                if (check[i][j] == 0 && node[i][j] == 0) {
-                    break Loop1;
-                }
+                    if (check[i][j] == 0 && node[i][j] == 0) {
+                        break Loop1;
+                    }
 
-                if (returnValue < check[i][j]) {
-                    returnValue = check[i][j];
+                    if (returnValue < check[i][j]) {
+                        returnValue = check[i][j];
+                    }
                 }
             }
-        }
 
-        if (returnValue != -1) {
-            System.out.println(returnValue - 1);
-        } else {
-            System.out.println(-1);
+            if (returnValue != -1) {
+                System.out.println(returnValue - 1);
+            } else {
+                System.out.println(-1);
+            }
         }
-
     }
 
 
@@ -99,5 +107,26 @@ public class Boj7576 {
                 }
             }
         }
+    }
+
+    // 모든 토마토가 익어있는 상태면 0 출력, 모든 토마토가 익지 못하는 상황이면 -1 출력
+    // 정수 1은 익은 토마토, 정수 0은 익지 않은 토마토, 정수 -1은 토마토가 들어있지 않은 칸
+    public static boolean allCheck() {
+
+        int cnt = 0;
+
+        for (int i = 0; i < node.length; i++) {
+            for (int j = 0; j < node[i].length; j++) {
+                if (node[i][j] == 1) {
+                    cnt++;
+                }
+            }
+        }
+
+        if (cnt == Integer.parseInt(StringValue[1]) * Integer.parseInt(StringValue[0])) // 이미 다 익어있는 상태
+            return true;
+        else
+            return false;
+
     }
 }
