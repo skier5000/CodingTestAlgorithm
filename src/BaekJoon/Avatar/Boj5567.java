@@ -19,51 +19,44 @@ import java.util.StringTokenizer;
  */
 public class Boj5567 {
 
-    private static ArrayList<ArrayList<Integer>> list;
-    private static boolean [] checked;
+    public static int arr[][];		// 친구 관계
+    public static boolean visit[];	// 방문 여부
+    public static int n;	// 동기 수
+    public static int m;	// 리스트 길이
+    public static int count = 0;	// 초대할 친구 수
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(bf.readLine());
+        m = Integer.parseInt(bf.readLine());
+        arr = new int[n+1][n+1];
+        visit = new boolean[n+1];
 
-        int n = Integer.parseInt(br.readLine());
-        int m = Integer.parseInt(br.readLine());
-
-        list = new ArrayList<>();
-        checked = new boolean[n+1];
-
-        for (int i = 0; i <= n; i++) {
-            list.add(new ArrayList<>());
-        }
-
-        for (int i = 0; i < m; i++) {
-            st = new StringTokenizer(br.readLine());
+        for(int i=0; i<m; i++) {
+            StringTokenizer st = new StringTokenizer(bf.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-
-            list.get(a).add(b);
-            list.get(b).add(a);
+            arr[a][b] = arr[b][a] = 1;	// 친구 관계 표시
         }
 
-        dfs(1, 0);
+        for(int i=2; i<=n; i++) {
+            if(arr[1][i] == 1) {	 // 상근이와 친구인 경우
+                if(!visit[i]) {		 // 상근이와 친구인데 아직 방문하지 않은 경우
+                    count ++;		 // 초대
+                    visit[i] = true; // 방문 표시
+                }
 
-        int count = 0;
-
-        for (int i = 0; i <= n; i++) {
-            if (checked[i]) count++;
+                // 상근이 친구의 친구 찾기 - 상근이와 연결된 정점에 연결되어 있는 정점 찾기.
+                for(int j=2; j<=n; j++) {
+                    if(arr[i][j] == 1 && !visit[j]) {
+                        count ++;			// 상근이 친구의 친구도 초대
+                        visit[j] = true;	// 방문 표시
+                    }
+                }
+            }
         }
 
-        System.out.println(count-1);
-    }
-
-    private static void dfs(int index, int depth) {
-        if (depth == 2) {
-            return;
-        }
-
-        for (Integer i: list.get(index)) {
-            checked[i] = true;
-            dfs(i, depth + 1);
-        }
+        System.out.println(count);
+        bf.close();
     }
 }
