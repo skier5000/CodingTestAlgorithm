@@ -48,6 +48,7 @@ public class Boj5427 {
 
     // BFS 메소드
     public static void bfs (int startSangGuenX, int startSangGuenY, int startFireX, int startFireY, String[] M) {
+
         Queue<int[]> queue = new LinkedList<>();
 
         queue.offer(new int[]{startSangGuenX, startSangGuenY});
