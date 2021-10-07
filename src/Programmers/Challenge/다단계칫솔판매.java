@@ -1,6 +1,10 @@
 package Programmers.Challenge;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class 다단계칫솔판매 {
     public static void main(String[] args) {
@@ -26,8 +30,9 @@ public class 다단계칫솔판매 {
     static int dy[] = { -2, -1, 1, 2, 2, 1, -1, -2 };
     static int node[][]; // 그래프 배열
     static int check[][]; // 방문 배열
-    static ArrayList<Integer> resultList = new ArrayList<>();
     static String recommendPeople;
+    static int sellerManSale10Percent = 0;
+    static HashMap<String, Integer> hm = new HashMap<>();
 
     public static int[] solution(String[] enroll, String[] referral, String[] seller, int[] amount) {
         int[] answer = {};
@@ -37,18 +42,30 @@ public class 다단계칫솔판매 {
                 referral[i] = "center";
         }
 
+        /*
+        enroll
+         */
+
         for (int i = 0; i < seller.length; i++) {
             String sellerMan = seller[i];        // 판 사람
             int sellerManSale = amount[i] * 100; // 판 금액
+            sellerManSale10Percent = sellerManSale * 10 / 100;
+            int sellerManSale90Percent = sellerManSale - sellerManSale10Percent;
 
             // 그 사람을 추천해준 사람
             for (int j = 0; j < enroll.length; j++) {
                 if (enroll[j].equals(sellerMan)) {
                     recommendPeople = referral[j];
+                    break;
                 }
             }
-        }
 
+            if (!hm.containsKey(sellerMan)) {  // 해당 판매자가 없으면
+                hm.put(sellerMan, sellerManSale90Percent);
+            } else {  // 판매했던 사람이면 빼고 더해서 넣기
+                hm.replace(sellerMan, sellerManSale10Percent);
+            }
+        }
 
         return answer;
     }
