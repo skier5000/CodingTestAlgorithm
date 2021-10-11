@@ -44,6 +44,8 @@ public class 다단계칫솔판매 {
 
         /*
         enroll
+        노드 구성 -> 추천인 구성(Queue? Stack?) -> 추천인을 따라가면서 10%씩 차감 -> 최종 "center" 부분에 계속해서 더하고
+        -> 추천인 구성(Queue? Stack?) 이 비어있으면 while 문 종료
          */
 
         for (int i = 0; i < seller.length; i++) {
