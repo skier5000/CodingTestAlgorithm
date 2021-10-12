@@ -26,54 +26,51 @@ public class 다단계칫솔판매 {
         System.out.println(solution2); // [0, 110, 378, 180, 270, 450, 0, 0]
     }
 
-    static int dx[] = { -1, -2, -2, -1, 1, 2, 2, 1 };
-    static int dy[] = { -2, -1, 1, 2, 2, 1, -1, -2 };
-    static int node[][]; // 그래프 배열
-    static int check[][]; // 방문 배열
-    static String recommendPeople;
-    static int sellerManSale10Percent = 0;
-    static HashMap<String, Integer> hm = new HashMap<>();
-
     public static int[] solution(String[] enroll, String[] referral, String[] seller, int[] amount) {
-        int[] answer = {};
-
-        for (int i = 0; i < referral.length; i++) {
-            if (referral[i].equals("-"))
-                referral[i] = "center";
+        HashMap<String, Person> personMap = new HashMap<>();
+        for (String name : enroll) {
+            personMap.put(name, new Person(name, null, 0));
         }
 
-        /*
-        enroll
-        노드 구성 -> 추천인 구성(Queue? Stack?) -> 추천인을 따라가면서 10%씩 차감 -> 최종 "center" 부분에 계속해서 더하고
-        -> 추천인 구성(Queue? Stack?) 이 비어있으면 while 문 종료
-         */
+        for (int i = 0; i < enroll.length; i++) {
+            if (referral[i].equals("-")) {
+                continue;
+            }
+            personMap.get(enroll[i]).parent = personMap.get(referral[i]);
+        }
 
         for (int i = 0; i < seller.length; i++) {
-            String sellerMan = seller[i];        // 판 사람
-            int sellerManSale = amount[i] * 100; // 판 금액
-            sellerManSale10Percent = sellerManSale * 10 / 100;
-            int sellerManSale90Percent = sellerManSale - sellerManSale10Percent;
-
-            // 그 사람을 추천해준 사람
-            for (int j = 0; j < enroll.length; j++) {
-                if (enroll[j].equals(sellerMan)) {
-                    recommendPeople = referral[j];
-                    break;
-                }
-            }
-
-            if (!hm.containsKey(sellerMan)) {  // 해당 판매자가 없으면
-                hm.put(sellerMan, sellerManSale90Percent);
-            } else {  // 판매했던 사람이면 빼고 더해서 넣기
-                hm.replace(sellerMan, sellerManSale10Percent);
-            }
+            personMap.get(seller[i]).CalcProfit(amount[i] * 100);
         }
 
-        return answer;
+        int[] result = new int[enroll.length];
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = personMap.get(enroll[i]).profit;
+        }
+
+        return result;
     }
 
-    public static String findRecommendPeople (String[] enroll, String[] referral, String[] seller) {
 
-        return null;
+
+    static class Person {
+        String name;
+        Person parent;
+        int profit;
+
+        public Person(String name, Person parent, int profit) {
+            this.name = name;
+            this.parent = parent;
+            this.profit = profit;
+        }
+
+        public void CalcProfit(int profit) {
+            int profitToParent = profit / 10;
+            this.profit += profit - profitToParent;
+            if (this.parent != null && profitToParent >= 1) {
+                this.parent.CalcProfit(profitToParent);
+            }
+        }
     }
 }
