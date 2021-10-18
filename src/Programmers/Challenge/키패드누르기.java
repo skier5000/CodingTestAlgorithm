@@ -34,6 +34,8 @@ public class 키패드누르기 {
     만약 두 엄지손가락의 거리가 같다면, 오른손잡이는 오른손 엄지손가락, 왼손잡이는 왼손 엄지손가락을 사용
 
      */
+
+
     public String solution(int[] numbers, String hand) {
         HashMap<String, String> handPosition = new HashMap<>();
         handPosition.put("left", "*");
