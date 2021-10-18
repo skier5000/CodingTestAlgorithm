@@ -1,8 +1,6 @@
 package Programmers.Challenge;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 public class 키패드누르기 {
     public static void main(String[] args) {
@@ -35,11 +33,22 @@ public class 키패드누르기 {
 
      */
 
-
     public String solution(int[] numbers, String hand) {
-        HashMap<String, String> handPosition = new HashMap<>();
-        handPosition.put("left", "*");
-        handPosition.put("right", "#");
+        HashMap<String, int[]> handPosition = new HashMap<>();
+        int node[][] = new int[4][3]; // 그래프 배열
+        int cnt = 1;
+        for (int i = 0; i < node.length; i++) {
+            for (int j = 0; j < node[i].length; j++) {
+                node[i][j] = cnt;
+                cnt++;
+            }
+        }
+        node[3][0] = 10;
+        node[3][1] = 0;
+        node[3][2] = 10;
+
+        handPosition.put("left", new int[]{3, 0});
+        handPosition.put("right", new int[]{3, 2});
 
         int[] leftSide = new int[]{1, 4, 7};
         int[] rightSide = new int[]{3, 6, 9};
@@ -53,26 +62,119 @@ public class 키패드누르기 {
 
             /* 왼손사용 */
             if (Arrays.stream(leftSide).anyMatch(value -> value == gotoNumber)) {
-                handPosition.put("left", String.valueOf(gotoNumber));
+                switch (gotoNumber) {
+                    case 1 :
+                        handPosition.put("left", new int[]{0, 0});
+                        break;
+                    case 4 :
+                        handPosition.put("left", new int[]{1, 0});
+                        break;
+                    case 7 :
+                        handPosition.put("left", new int[]{2, 0});
+                        break;
+                    default:
+                        break;
+                }
                 sb.append("L");
                 continue;
             }
 
             /* 오른손사용 */
-            if (Arrays.stream(rightSide).anyMatch(value -> value == gotoNumber)) {
-                handPosition.put("right", String.valueOf(gotoNumber));
+            else if (Arrays.stream(rightSide).anyMatch(value -> value == gotoNumber)) {
+                switch (gotoNumber) {
+                    case 3 :
+                        handPosition.put("right", new int[]{0, 2});
+                        break;
+                    case 6 :
+                        handPosition.put("right", new int[]{1, 2});
+                        break;
+                    case 9 :
+                        handPosition.put("right", new int[]{2, 2});
+                        break;
+                    default:
+                        break;
+                }
                 sb.append("R");
                 continue;
             }
 
             /* 가까운 손가락 사용 */
-            if (Arrays.stream(middleSide).anyMatch(value -> value == gotoNumber)) {
+            else if (Arrays.stream(middleSide).anyMatch(value -> value == gotoNumber)) {
+                int dx[] = {0,0,1,-1};
+                int dy[] = {1,-1,0,0};
+                int nx = 0;
+                int ny = 0;
+
+                int leftSideBfs = bfs(handPosition.get("left")[0], handPosition.get("left")[1], node, nx, ny, dx, dy, gotoNumber);
+                int rightSideBfs = bfs(handPosition.get("right")[0], handPosition.get("right")[1], node, nx, ny, dx, dy, gotoNumber);
+
+                if (leftSideBfs > rightSideBfs) {   // 왼손이 더 멀어 ▶ 오른손으로 누를거야
+                    for (int j = 0; j < node.length; j++) {
+                        for (int k = 0; k < node[j].length; k++) {
+                            if (node[j][k] == gotoNumber)
+                                handPosition.put("right", new int[]{j, k});
+                        }
+                    }
+                    sb.append("R");
+                } else if (leftSideBfs < rightSideBfs) {   // 오른손이 더 멀어 ▶ 왼손으로 누를거야
+                    for (int j = 0; j < node.length; j++) {
+                        for (int k = 0; k < node[j].length; k++) {
+                            if (node[j][k] == gotoNumber)
+                                handPosition.put("left", new int[]{j, k});
+                        }
+                    }
+                    sb.append("L");
+                } else if (leftSideBfs == rightSideBfs) {   // 거리가 같다면 ▶ 손잡이에 따라
+                    for (int j = 0; j < node.length; j++) {
+                        for (int k = 0; k < node[j].length; k++) {
+                            if (node[j][k] == gotoNumber)
+                                handPosition.put(hand, new int[]{j, k});
+                        }
+                    }
+                    if (hand.equals("right"))
+                        sb.append("R");
+                    else
+                        sb.append("L");
+                }
+
                 continue;
             }
 
         }
 
-        return "answer";
+        return sb.toString();
+    }
+
+    // BFS 메소드
+    public static int bfs (int a, int b, int[][] node, int nx, int ny, int[] dx, int[] dy, int endPoint) {
+        int check[][] = new int[4][3]; // 방문 배열
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{a, b});
+        check[a][b] = 1;
+
+        while(!queue.isEmpty()) {
+
+            int[] poll = queue.poll();
+            int x = poll[0];
+            int y = poll[1];
+
+            for (int i = 0; i < 4; i++) {
+                nx = x + dx[i];
+                ny = y + dy[i];
+
+                if (nx >= 0 && ny >= 0 && nx < node.length && ny < node[0].length) {
+                    if (check[nx][ny] < 1) {
+                        queue.add(new int[]{nx, ny});
+                        check[nx][ny] = check[x][y] + 1;
+                        if (node[nx][ny] == endPoint) {
+                            return check[nx][ny];
+                        }
+                    }
+                }
+            }
+        }
+
+        return 0;
     }
 
 }
