@@ -27,7 +27,9 @@ public class 추석트래픽 {
     public int solution(String[] lines) {
         int answer = 0;
 
+        for (int i = 0; i < lines.length; i++) {
 
+        }
 
         return answer;
     }
