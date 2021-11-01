@@ -35,8 +35,10 @@ public class NewsClustering {
         System.out.println("str2 = " + str2);
 
         for (int i = 0; i < str1.length(); i++) {
-            
+
         }
+
+
         return answer;
     }
 }
