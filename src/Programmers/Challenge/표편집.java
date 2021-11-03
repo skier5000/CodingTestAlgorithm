@@ -76,10 +76,21 @@ public class 표편집 {
 
                 case "C":   // 현재 선택된 행을 삭제한 후, 바로 아래 행을 선택합니다. 단, 삭제된 행이 가장 마지막 행인 경우 바로 윗 행을 선택합니다.
                     idx = whatIndex(node);
-                    if (idx != (node.size() - 1)) {
-                        node.set(idx + 1, new CheckValue(true, false, 0));
-                    } else {
-                        node.set(idx - 1, new CheckValue(true, false, 0));
+                    
+                    if (idx != (node.size() - 1)) {   // 바로 아래 행 선택
+                        for (int j = idx; j < node.size(); j++) {
+                            if (node.get(idx).delYn == false) {
+                                node.set(idx + 1, new CheckValue(true, false, 0));
+                                break;
+                            }
+                        }
+                    } else {   // 바로 윗 행 선택
+                        for (int j = idx; j >= 0; j--) {
+                            if (node.get(idx).delYn == false) {
+                                node.set(idx - 1, new CheckValue(true, false, 0));
+                                break;
+                            }
+                        }
                     }
 
                     node.set(idx, new CheckValue(false, true, rankCnt++));
