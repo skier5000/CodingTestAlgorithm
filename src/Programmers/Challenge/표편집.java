@@ -7,16 +7,17 @@ import java.util.Spliterator;
 public class 표편집 {
     public static void main(String[] args) {
         표편집 dd = new 표편집();
-        dd.solution(8, 2, new String[]{"D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z"});
-        //dd.solution(8, 2, new String[]{"D 2","C","U 3","C","D 4","C","U 2","Z","Z","U 1","C"});
-
+        //System.out.println(dd.solution(8, 2, new String[]{"D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z"}));
+        System.out.println(dd.solution(8, 2, new String[]{"D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z", "U 1", "C"}));
 
     }
 
     public String solution(int n, int k, String[] cmd) {
-        String answer = "";
+        StringBuilder sb = new StringBuilder();
         int rankCnt = 1;
         int idx = 0;
+        int cnt = 0;
+        int moveIdx = 0;
 
         ArrayList<CheckValue> node = new ArrayList<>();  // 처음 표의 행 개수 (node)
 
@@ -33,19 +34,44 @@ public class 표편집 {
             switch (commander[0]) {
                 case "U":   // 현재 선택된 행에서 X칸 위에 있는 행을 선택합니다.
                     idx = whatIndex(node);
-                    node.set(idx - Integer.parseInt(commander[1]), new CheckValue(true, false, 0));
-                    node.set(idx, new CheckValue(false, false, 0));
+
+                    // 삭제여부 체크, 행 이동
+                    cnt = 0;
+                    moveIdx = idx;
+                    while (true) {
+                        moveIdx--;
+                        if (node.get(moveIdx).delYn == false && node.get(moveIdx).value == false) {
+                            cnt++;
+                        }
+
+                        if (cnt == Integer.parseInt(commander[1])) {
+                            node.set(moveIdx, new CheckValue(true, false, 0));
+                            node.set(idx, new CheckValue(false, false, 0));
+                            break;
+                        }
+                    }
+
                     break;
 
                 case "D":   // 현재 선택된 행에서 X칸 아래에 있는 행을 선택합니다.
                     idx = whatIndex(node);
 
-//                    for (int j = 0; j < node.size(); j++) {
-//                        if ()
-//                    }
+                    // 삭제여부 체크, 행 이동
+                    cnt = 0;
+                    moveIdx = idx;
+                    while (true) {
+                        moveIdx++;
+                        if (node.get(moveIdx).delYn == false && node.get(moveIdx).value == false) {
+                            cnt++;
+                        }
 
-                    node.set(idx + Integer.parseInt(commander[1]), new CheckValue(true, false, 0));
-                    node.set(idx, new CheckValue(false, false, 0));
+                        if (cnt == Integer.parseInt(commander[1])) {
+                            node.set(moveIdx, new CheckValue(true, false, 0));
+                            node.set(idx, new CheckValue(false, false, 0));
+                            break;
+                        }
+                    }
+
                     break;
 
                 case "C":   // 현재 선택된 행을 삭제한 후, 바로 아래 행을 선택합니다. 단, 삭제된 행이 가장 마지막 행인 경우 바로 윗 행을 선택합니다.
@@ -61,6 +87,19 @@ public class 표편집 {
                     break;
 
                 case "Z":   // 가장 최근에 삭제된 행을 원래대로 복구합니다. 단, 현재 선택된 행은 바뀌지 않습니다.
+
+                    // 최근에 삭제된 행 탐색
+                    int lastDelIdx = 0;
+                    for (int j = 0; j < node.size() - 1; j++) {
+                        if (node.get(j).rank > node.get(j + 1).rank && node.get(lastDelIdx).rank < node.get(j).rank)
+                            lastDelIdx = j;
+                        else if (node.get(j).rank < node.get(j + 1).rank && node.get(lastDelIdx).rank < node.get(j+1).rank)
+                            lastDelIdx = j + 1;
+                    }
+
+                    if (lastDelIdx != 0)
+                        node.set(lastDelIdx, new CheckValue(false, false, 0));
+
                     break;
 
                 default:
@@ -69,8 +108,14 @@ public class 표편집 {
 
         }
 
+        for (int i = 0; i < node.size(); i++) {
+            if (node.get(i).delYn == false)
+                sb.append("O");
+            else
+                sb.append("X");
+        }
 
-        return answer;
+        return sb.toString();
     }
 
     // 선택된 행 찾는 메소드
