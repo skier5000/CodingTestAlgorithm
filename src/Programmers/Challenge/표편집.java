@@ -129,6 +129,8 @@ public class 표편집 {
         return sb.toString();
     }
 
+
+
     // 선택된 행 찾는 메소드
     public int whatIndex(ArrayList<CheckValue> node) {
         for (int i = 0; i < node.size(); i++) {
@@ -138,6 +140,8 @@ public class 표편집 {
         }
         return 0;
     }
+
+
 
     static class CheckValue {
         boolean value; // 선택된 행
