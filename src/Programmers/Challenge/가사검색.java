@@ -57,10 +57,6 @@ public class 가사검색 {
 
         }
 
-//        for (int i : answer) {
-//            System.out.println("i = " + i);
-//        }
-
         return answer;
     }
 }
