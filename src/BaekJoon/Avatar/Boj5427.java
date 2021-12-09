@@ -72,4 +72,6 @@ public class Boj5427 {
             }
         }
     }
+
+
 }
