@@ -7,6 +7,19 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/*
+4 9 2
+3 0 7
+8 1 6
+
+0 12 12
+16 10 0
+8 8 14
+
+495 468 0
+0 522 414
+441 0 549
+ */
 public class 매직스퀘어 {
 
     static int dx[] = {0,0,1,-1};
@@ -28,7 +41,6 @@ public class 매직스퀘어 {
             }
         }
 
-        // bfs
         bfs(0, 0);
 
 
@@ -50,12 +62,12 @@ public class 매직스퀘어 {
                 nx = x + dx[i];
                 ny = y + dy[i];
 
-//                if (nx >= 0 && ny >= 0) {
-//                    if (matrix[nx][ny] != 0 && check[nx][ny] < 1 && nx < Integer.parseInt(StringValue[0]) && ny < Integer.parseInt(StringValue[1])) {
-//                        queue.add(new int[]{nx, ny});
-//                        check[nx][ny] = check[x][y] + 1;
-//                    }
-//                }
+                if (nx >= 0 && ny >= 0 && nx < matrix.length && ny < matrix[0].length) {
+                    if (matrix[nx][ny] != 0 && check[nx][ny] < 1) {
+                        queue.add(new int[]{nx, ny});
+                        check[nx][ny] = check[x][y] + 1;
+                    }
+                }
             }
         }
     }
