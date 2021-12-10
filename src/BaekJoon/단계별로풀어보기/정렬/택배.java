@@ -72,7 +72,6 @@ public class 택배 {
                     if ((truckBoxes + matrixArrayList.get(i).boxes) <= maxBoxesSize) {
                         truckBoxes += matrixArrayList.get(i).boxes; // 박스 싣기
                         totalBoxes += matrixArrayList.get(i).boxes; // 총합 박스 개수 구하는 변수에 추가
-                        System.out.println();
                     }
                     // 그 자체로 박스 실을 수 없으면
                     else {
@@ -80,27 +79,23 @@ public class 택배 {
                         if (truckBoxes >= maxBoxesSize) break Loop3;
                         // 맥스보다 작으면 그만큼 싣기
                         else {
-                            System.out.println("maxBoxesSize = " + maxBoxesSize);
-                            System.out.println("truckBoxes = " + truckBoxes);
-                            System.out.println("matrixArrayList.get(i).boxes = " + matrixArrayList.get(i).boxes);
-                            System.out.println("maxBoxesSize - truckBoxes : " + (maxBoxesSize - truckBoxes));
                             if ((matrixArrayList.get(i).boxes) > (maxBoxesSize - truckBoxes)) {
-                                System.out.println("(maxBoxesSize - truckBoxes) : " + (maxBoxesSize - truckBoxes));
                                 truckBoxes += (maxBoxesSize - truckBoxes); // 박스 싣기
                                 totalBoxes += (maxBoxesSize - truckBoxes); // 총합 박스 개수 구하는 변수에 추가
-                                System.out.println();
                                 break Loop3;
                             } else {
-                                System.out.println("2'");
                                 truckBoxes += matrixArrayList.get(i).boxes;
                                 totalBoxes += matrixArrayList.get(i).boxes; // 총합 박스 개수 구하는 변수에 추가
                             }
                         }
                     }
-                    System.out.println();
-                    System.out.println();
+
                 }
+
+
             }
+
+
 
         }
 
@@ -120,5 +115,9 @@ public class 택배 {
             this.end = end;
             this.boxes = boxes;
         }
+    }
+
+    static class truckBoxes {
+
     }
 }
