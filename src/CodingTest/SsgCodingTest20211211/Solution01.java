@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/*
+설계
+ctrl 키 눌렀을 때 가장 끝 || 박스쳐져있는 곳으로 가야함
+ */
 public class Solution01 {
     public static void main(String[] args) {
         Solution01 dd = new Solution01();
